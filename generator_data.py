@@ -366,14 +366,53 @@ def createGuru(jml):
     createData("account",l_account)
     return l
 
+def createRuangan(jml):
+    ruang = 101
+    kondisi = "baik"
+    kapasitas = 20
+    tingkat = 1
+    nama = ruang
+    idkategori = 1
+    tingkat_kelas = 1
+    
+    list_ruangan = []
+    for i in range(0,jml*3):
+        dict_ruang = my_dictionary()
+        k =int(i/jml)
+        # print(k)
+        ruang = 101 + (k * 100)
+        # print(ruang)
+        if(ruang <200):
+            tingkat = 1
+        elif ruang < 300:
+            tingkat = 2
+        else:
+            tingkat = 3
+        tgl= randomDate2("1/1/2005", "1/1/2006", random.random())
+        dict_ruang.add("id_ruangan",str(ruang +(i%jml)))
+        dict_ruang.add("id_kategori_ruangan",idkategori)
+        dict_ruang.add("nama_ruangan","RK"+str(dict_ruang.get("id_ruangan")))
+        dict_ruang.add("tingkat_ruangan",tingkat)
+        dict_ruang.add("kapasitas_ruangan",kapasitas)
+        dict_ruang.add("kondisi_ruangan",kondisi)
+        dict_ruang.add("create_date",tgl)
+        dict_ruang.add("update_date",tgl)
+        dict_ruang.add("created_by","")
+        dict_ruang.add("update_by","")
+        
+        list_ruangan.append(dict_ruang)
+        # f.write(str(ruang +(i%2))+","+str(idkategori)+","+str(nama)+","+str(tingkat)+","+str(kapasitas)+","+str(kondisi)+"\n")
+    # f.write("303,2,Lab Komputer,3,30,baik")
+    # f.close()
+    return list_ruangan
 
 def test():
     # mapel=createMapel(2,50)
     # createData("matapelajaran",mapel)
     # account = createAccount(1,100)
     # createData("account",account)
-    guru = createGuru(30)
-    createData("guru",guru)
+    guru = createRuangan(5)
+    createData("ruangan",guru)
 
 
 def main():
