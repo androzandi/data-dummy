@@ -292,16 +292,92 @@ def createTU(jml):
             break
     createData("account",l_account)
     return l
+
+def createGuru(jml):
+    l=[]
+    l_account =createAccount(3,jml)
+    f_name = open("resources/name.txt","r")
+    list_name = f_name.readlines()
+    f_name.close()
+    i=0
+    iswali="-"
+    ispel="-"
+    alamat ="J. Bawang"
+    tempat = "Bandung"
+    kelurahan = "Cicaheum"
+    kecamatan = "Kiara Condong"
+    kota = "Bandung"
+    provinsi = "Jawa Barat"
+    agama = "Islam"
+    jk = ["L","P"]
+    gold = ["A","B","AB","O"]
+    i=0
+    status = ["Tetap","Bukan Tetap"]
+    gelar = ["D1","D2","D3","D4","S1","S2","S3"]
+    nokk=1232141
+    nik =12312
+    univ = ["Universitas A","Universitas B","Universitas C","Politeknik A","Institut A","Institut C"]
+    jurusan = ["T. Informatika","T. Kimia","Pend. Matematika","Matematika","Pend. Olahraga","Akuntansi","T Mesin","T. Elektro"]
+    for name in list_name:
+        lulusan = str(univ[int(random.random()*10 % 6)]) +":"+ str(jurusan[int(random.random()*10%8)])
+        tglcpns = randomDate2("1/1/1995", "1/1/1999", random.random())
+        cpns = tglcpns.split("/")
+        cpns = "".join(cpns)
+        jenis_kelamin = jk[int(random.random()*10 % 2)]
+        tgllahir = randomDate2("1/1/1975", "1/1/1980", random.random())
+        tgl = randomDate2("1/1/2005", "1/1/2008", random.random())
+        if(jenis_kelamin=="L"):
+            username = str(tgllahir)+str(cpns)+"1"+makeDigitNumber(3,i)
+        else:
+            username = str(tgllahir)+str(cpns)+"2"+makeDigitNumber(3,i)
+        l_account[i].update({"username":username})
+        l_account[i].update({"password":str(tgllahir)+"a"})
+        dicty = my_dictionary()
+        dicty.add("username",username)
+        dicty.add("id_status",status[int(random.random()*10%2)])
+        dicty.add("nama",name.rstrip('\n'))
+        dicty.add("tempat_lahir",tempat)
+        dicty.add("tanggal_lahir",tgllahir)
+        dicty.add("alamat_jalan",alamat)
+        dicty.add("kelurahan",kelurahan)
+        dicty.add("kecamatan",kecamatan)
+        dicty.add("kabupaten_kota",kota)
+        dicty.add("provinsi",provinsi)
+        dicty.add("agama",agama)
+        dicty.add("jenis_kelamin",jenis_kelamin)
+        dicty.add("no_kk",nokk)
+        dicty.add("nik",nik)
+        dicty.add("gol_darah",gold[int(random.random()*10 % 4)])
+        dicty.add("image","--")
+        dicty.add("nip",username)
+        dicty.add("lulusan",lulusan)
+        dicty.add("jenjang_pendidikan",gelar[int(random.random()*10%7)])
+        dicty.add("gelar","-")
+        dicty.add("is_wali_kelas","-")
+        dicty.add("is_wali_pengajar","-")
+        dicty.add("create_date",tgl)
+        dicty.add("update_date",tgl)
+        dicty.add("created_by","")
+        dicty.add("update_by","")
+        l.append(dicty)
+        i+=1
+        if i==jml:
+            break
+    createData("account",l_account)
+    return l
+
+
 def test():
     # mapel=createMapel(2,50)
     # createData("matapelajaran",mapel)
     # account = createAccount(1,100)
     # createData("account",account)
-    tu = createTU(30)
-    createData("tu",tu)
+    guru = createGuru(30)
+    createData("guru",guru)
 
 
 def main():
     print("main")
 
 test()
+
