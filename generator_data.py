@@ -44,7 +44,11 @@ def randomDate2(start, end, prop):
 
 #create data to csv
 def createData(name,datas):
-    f = open("data/"+str(name)+".csv","w+")
+    param = "w+"
+    if name == "account":
+        param = "a+"
+    
+    f = open("data/"+str(name)+".csv",param)
     
     # keys = datas[0].keys()
     # print(keys[0])
@@ -406,13 +410,82 @@ def createRuangan(jml):
     # f.close()
     return list_ruangan
 
+#jmlpengajar = jumlah kemungkinan guru mengajar pada mata pelajaran berbeda.
+# contoh jmlpengajar = 3 maka pada list guru sebelumnya 
+# ada kemungkinan 0 atau lebih yang mengajar 3 mata pelajaran berbeda
+def createMengampu(list_mapel,list_guru,jmlpengajar):
+    len_l_mapel = len(list_mapel)
+    l =[]
+    
+    array_mapel2 =0
+    for guru in list_guru:
+        mapel2 = int(random.random()*jmlpengajar % jmlpengajar)
+        array_mapel = int(random.random()*len_l_mapel % len_l_mapel)
+        while mapel2 >= 0:
+            dicti = my_dictionary()
+            dicti.add("nip",guru.get("nip"))
+            array_mapel2 = int(random.random()*len_l_mapel % len_l_mapel)
+            while array_mapel == array_mapel2:
+                array_mapel2 = int(random.random()*len_l_mapel % len_l_mapel)
+                # print("masuk loop")
+            # print("ap  : "+str(array_mapel)+"\n")
+            # print("ap2 : "+str(array_mapel2)+"\n")
+            dicti.add("kode_mapel",list_mapel[array_mapel2].get("kode_mapel"))
+            mapel2 -=1
+            l.append(dicti)
+    return l
+
+# def createTimeSchedule(jamke):
+#     listTime = ["07:00","07:45","08:30","09:15","10:00","10:45","11:30"]
+#     time = listTime[jamke-1] + "-" + listTime[jamke]
+#     return time
+def createKategoriPenilaian(jml):
+    f_kategori = open("resources/kategori_penilaian.txt","r")
+    listkategori = f_kategori.readlines()
+    f_kategori.close()
+    list_kategori = []
+    i = 0
+    for kategori in listkategori:
+        dictionary = my_dictionary() 
+        dictionary.add("id_kategori", i+1)
+        dictionary.add("nama_kategori_penilaian", kategori.rstrip('\n'))
+        list_kategori.append(dictionary)
+        i +=1
+        if i == jml:
+            break
+
+    return list_kategori
+
+def createSikap():
+    f = open("resources/aspek_penilaian.txt","r")
+    fs = f.readlines()
+    f.close()
+    jenis = ["Spiritual","Sosial"]
+    sosial = False
+    list_sikap = []
+    i = 0
+    for sikap in fs:
+        dictionary = my_dictionary()
+        dictionary.add("id_sikap", i+1)
+        if(sikap.rstrip('\n')=="Kepedulian"):
+            sosial = True
+        if(sosial):
+            dictionary.add("jenis",jenis[1])
+        else:
+            dictionary.add("jenis",jenis[0])
+        dictionary.add("aspek_penilaian",sikap.rstrip('\n'))
+        list_sikap.append(dictionary)
+        i +=1
+    return list_sikap
 def test():
-    # mapel=createMapel(2,50)
+    # mapel=createMapel(5,50)
     # createData("matapelajaran",mapel)
-    # account = createAccount(1,100)
-    # createData("account",account)
-    guru = createRuangan(5)
-    createData("ruangan",guru)
+   
+    # guru = createGuru(30)
+    # createData("guru",guru)
+    # mengampu = createMengampu(mapel,guru,3)
+    # createData("mengampu",mengampu)
+    
 
 
 def main():
